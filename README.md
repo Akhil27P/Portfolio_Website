@@ -14,7 +14,7 @@ npm start
 Update `"homepage"` in package.json to your GitHub pages URL:
 
 ```json
-"homepage": "https://your-github-username.github.io/your-repo-name"
+"homepage": "https://akhil27p.github.io/Portfolio_Website1"
 ```
 
 Then run:
