@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardContent } from "./components/ui/card";
+import { Button } from "./components/ui/button";
 import { Mail, Linkedin, Github } from "lucide-react";
 
 export default function Portfolio() {
@@ -13,11 +14,7 @@ export default function Portfolio() {
         </p>
         <p className="text-sm text-gray-500">San Jose, CA</p>
         <div className="flex justify-center space-x-4 pt-2">
-          <a
-            href="mailto:akhil.pamarthy@outlook.com"
-            aria-label="Email"
-            title="Email Akhil"
-          >
+          <a href="mailto:akhil.pamarthy@outlook.com" aria-label="Email">
             <Mail className="w-5 h-5" />
           </a>
           <a
@@ -25,16 +22,14 @@ export default function Portfolio() {
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
-            title="LinkedIn Profile"
           >
             <Linkedin className="w-5 h-5" />
           </a>
           <a
-            href="https://github.com/akhilpamarthy"
+            href="https://github.com/Akhil27P"
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub"
-            title="GitHub Profile"
           >
             <Github className="w-5 h-5" />
           </a>
@@ -113,7 +108,9 @@ export default function Portfolio() {
                 Deployed scalable RESTful APIs on Azure App Service serving
                 thousands of users.
               </li>
-              <li>Mentored junior engineers, improving team efficiency by 20%.</li>
+              <li>
+                Mentored junior engineers, improving team efficiency by 20%.
+              </li>
             </ul>
           </div>
 
@@ -188,13 +185,11 @@ export default function Portfolio() {
 
       {/* Resume Button */}
       <div className="text-center">
-        <a
-          href="/resume.pdf"
-          download
-          className="inline-block px-4 py-2 border border-black rounded-md font-semibold transition-colors duration-300 cursor-pointer hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black"
-        >
-          Download Resume (PDF)
-        </a>
+        <Button variant="outline">
+          <a href="/resume.pdf" download>
+            Download Resume (PDF)
+          </a>
+        </Button>
       </div>
     </div>
   );
