@@ -3,7 +3,7 @@ import React from "react";
 const ResumeDownload = () => {
   return (
     <button
-      onClick={() => window.open('/Akhil_Pamarthy_Resume.pdf', '_blank')}
+      onClick={() => window.open('/Akhil_P_Resume.pdf', '_blank')}
       style={{
         padding: "10px 20px",
         fontSize: "16px",
