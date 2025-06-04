@@ -61,7 +61,7 @@ export default function Portfolio() {
         <section className="text-center space-y-3" id="hero">
           <h1 className="text-5xl font-bold animate-fadeInDown">Akhil Pamarthy</h1>
           <p className="text-xl text-gray-700 animate-fadeInUp">
-            AI/ML Engineer | Building scalable AI systems & automation pipelines
+            Software Engineer | Cloud | AI enthusiast
           </p>
           <p className="text-sm text-gray-500">San Jose, CA</p>
           <div className="flex justify-center space-x-6 pt-3">
