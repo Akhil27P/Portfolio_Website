@@ -4,7 +4,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main  # Or your default branch
+      - main
 
 jobs:
   build:
@@ -28,6 +28,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages  # The branch the app will be deployed to
-          folder: build     # The folder containing your build output
+          branch: gh-pages
+          folder: build
           token: ${{ secrets.GITHUB_TOKEN }}
