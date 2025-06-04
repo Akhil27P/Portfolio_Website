@@ -1,9 +1,6 @@
 import React from "react";
 import { Card, CardContent } from "./components/ui/card";
-import { Button } from "./components/ui/button";
 import { Mail, Linkedin, Github } from "lucide-react";
-
-
 
 export default function Portfolio() {
   return (
@@ -16,7 +13,11 @@ export default function Portfolio() {
         </p>
         <p className="text-sm text-gray-500">San Jose, CA</p>
         <div className="flex justify-center space-x-4 pt-2">
-          <a href="mailto:akhil.pamarthy@outlook.com" aria-label="Email">
+          <a
+            href="mailto:akhil.pamarthy@outlook.com"
+            aria-label="Email"
+            title="Email Akhil"
+          >
             <Mail className="w-5 h-5" />
           </a>
           <a
@@ -24,10 +25,17 @@ export default function Portfolio() {
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
+            title="LinkedIn Profile"
           >
             <Linkedin className="w-5 h-5" />
           </a>
-          <a href="#" aria-label="GitHub">
+          <a
+            href="https://github.com/akhilpamarthy"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="GitHub"
+            title="GitHub Profile"
+          >
             <Github className="w-5 h-5" />
           </a>
         </div>
@@ -95,7 +103,7 @@ export default function Portfolio() {
             <ul className="list-disc list-inside">
               <li>
                 Developed object detection and segmentation models with
-                Detectron2 achieving >90% F1-score.
+                Detectron2 achieving &gt;90% F1-score.
               </li>
               <li>
                 Managed a large annotated dataset with VGG Image Annotator,
@@ -105,9 +113,7 @@ export default function Portfolio() {
                 Deployed scalable RESTful APIs on Azure App Service serving
                 thousands of users.
               </li>
-              <li>
-                Mentored junior engineers, improving team efficiency by 20%.
-              </li>
+              <li>Mentored junior engineers, improving team efficiency by 20%.</li>
             </ul>
           </div>
 
@@ -169,7 +175,10 @@ export default function Portfolio() {
             <ul className="list-disc list-inside space-y-1">
               <li>Docker Foundations Professional Certificate – 2025</li>
               <li>RESTful API Developer – LinkedIn Learning, 2025</li>
-              <li>Software Engineering Job Simulations – Hewlett Packard & Wells Fargo, 2025</li>
+              <li>
+                Software Engineering Job Simulations – Hewlett Packard & Wells
+                Fargo, 2025
+              </li>
               <li>3× IT Wizard Competition Winner (2009-2011)</li>
               <li>2nd Place – Formula Kart Design Challenge</li>
             </ul>
@@ -177,14 +186,15 @@ export default function Portfolio() {
         </CardContent>
       </Card>
 
-  
       {/* Resume Button */}
       <div className="text-center">
-        <Button variant="outline">
-          <a href="/resume.pdf" download>
-            Download Resume (PDF)
-          </a>
-        </Button>
+        <a
+          href="/resume.pdf"
+          download
+          className="inline-block px-4 py-2 border border-black rounded-md font-semibold transition-colors duration-300 cursor-pointer hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black"
+        >
+          Download Resume (PDF)
+        </a>
       </div>
     </div>
   );
