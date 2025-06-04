@@ -1,319 +1,219 @@
+/* Reset and basics */
 *,
-
-
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
-
 body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #fff;
+  color: #111;
   line-height: 1.6;
-  color: #222;
-  background: linear-gradient(135deg, #fefefe, #eaeaea);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
   scroll-behavior: smooth;
-  min-height: 100vh;
 }
-
 a {
-  color: inherit;
+  color: #333;
   text-decoration: none;
-  cursor: pointer;
-  transition: color 0.3s ease, transform 0.2s ease;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
 }
-
 a:hover,
-a:focus-visible {
-  color: #111;
-  text-decoration: underline;
+a:focus {
+  border-color: #333;
   outline: none;
-  transform: scale(1.05);
 }
 
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-  outline: 3px solid #111;
-  outline-offset: 2px;
+/* Header and navigation */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  z-index: 1000;
 }
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  color: #111;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-}
-
-p {
-  margin-bottom: 1.25em;
-  color: #444;
-  font-size: 1.05rem;
-}
-
-ul, ol {
-  padding-left: 1.5rem;
-  margin-bottom: 1.25em;
-  color: #555;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.max-w-4xl {
-  max-width: 64rem;
-}
-
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.p-4 {
-  padding: 1rem;
-}
-
-.p-6 {
-  padding: 1.5rem;
-}
-
-.p-12 {
-  padding: 3rem;
-}
-
-.space-y-1 > :not(template) ~ :not(template) {
-  margin-top: 0.25rem;
-}
-
-.space-y-2 > :not(template) ~ :not(template) {
-  margin-top: 0.5rem;
-}
-
-.space-y-4 > :not(template) ~ :not(template) {
-  margin-top: 1rem;
-}
-
-.space-y-6 > :not(template) ~ :not(template) {
-  margin-top: 1.5rem;
-}
-
-.space-y-10 > :not(template) ~ :not(template) {
-  margin-top: 2.5rem;
-}
-
-/* Cards */
-.card {
-  border-radius: 0.5rem;
-  background-color: #fff;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  transition: box-shadow 0.3s ease;
-}
-
-.card:hover,
-.card:focus-within {
-  box-shadow: 0 12px 36px rgba(0,0,0,0.12);
-}
-
-/* Buttons */
-button,
-input[type="button"],
-input[type="submit"] {
-  cursor: pointer;
-  border-radius: 0.5rem;
-  border: 2px solid #111;
-  background-color: transparent;
-  color: #111;
-  padding: 0.65rem 1.25rem;
-  font-weight: 700;
-  font-size: 1rem;
-  transition: background-color 0.3s ease, color 0.3s ease,
-    transform 0.15s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-}
-
-button:hover,
-button:focus-visible,
-input[type="button"]:hover,
-input[type="button"]:focus-visible,
-input[type="submit"]:hover,
-input[type="submit"]:focus-visible {
-  background-color: #111;
-  color: #fff;
-  outline: none;
-  transform: scale(1.05);
-}
-
-/* Navigation */
-header nav {
+.nav-list {
+  margin: 0;
+  padding: 1rem 2rem;
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  padding: 1.25rem 0;
-  background: #fff;
-  box-shadow: 0 1px 8px rgba(0,0,0,0.05);
-  position: sticky;
-  top: 0;
-  z-index: 9999;
+  list-style: none;
 }
-
-header nav button {
-  font-size: 1.1rem;
-  font-weight: 600;
+.nav-list li {
+  margin: 0 1rem;
+}
+.nav-list button {
+  font: inherit;
   background: none;
   border: none;
-  padding: 0.5rem 0;
-  border-bottom: 3px solid transparent;
-  transition: border-color 0.3s ease, color 0.3s ease;
-  color: #666;
+  padding: 0.25rem 0;
   cursor: pointer;
+  color: #444;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s ease, color 0.3s ease;
 }
-
-header nav button:hover,
-header nav button:focus-visible {
-  color: #111;
-  border-color: #111;
+.nav-list button:hover,
+.nav-list button:focus {
+  color: #000;
+  border-color: #000;
   outline: none;
 }
-
-header nav button[aria-current="page"] {
-  color: #111;
-  border-color: #111;
-  font-weight: 700;
+.nav-list button.active {
+  color: #000;
+  border-color: #000;
+  font-weight: 600;
 }
 
-/* Hero Section */
-#hero {
-  padding: 6rem 1.5rem 3rem;
+/* Container & sections */
+.container {
+  max-width: 720px;
+  margin: 6rem auto 2rem auto; /* space for fixed header */
+  padding: 0 1rem;
+}
+
+.section {
+  margin-bottom: 4rem;
+}
+
+/* Hero */
+.hero {
   text-align: center;
+  margin-bottom: 6rem;
+}
+.hero h1 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.hero .title {
+  font-weight: 500;
+  font-size: 1.3rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+.contact-line {
+  font-size: 0.9rem;
+  color: #555;
+}
+.contact-line a {
+  font-weight: 600;
 }
 
-#hero h1 {
-  font-size: 4.5rem;
-  letter-spacing: -0.03em;
-  color: #111;
-  animation: fadeInDown 1s ease forwards;
-}
-
-#hero p {
-  font-size: 1.35rem;
-  color: #444;
-  margin-top: 0.5rem;
-  animation: fadeInUp 1s ease forwards;
-}
-
-#hero p + p {
-  font-size: 0.95rem;
-  color: #666;
-  margin-top: 0.25rem;
-}
-
-/* Contact section */
-#contact {
-  max-width: 36rem;
-  margin: 0 auto;
-  padding-bottom: 4rem;
-}
-
-#contact p {
-  font-size: 1.2rem;
+/* Section headings */
+h2 {
+  font-weight: 700;
+  font-size: 2rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.3rem;
   margin-bottom: 1rem;
 }
 
-/* Skill Progress Bar */
-.skill-progress {
-  margin-bottom: 1.5rem;
+/* Jobs */
+.job {
+  margin-bottom: 2rem;
+}
+.job h3 {
+  margin: 0 0 0.2rem 0;
+  font-weight: 600;
+}
+.job-company {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+.job ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #333;
+}
+.job ul li {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
 }
 
-.skill-progress .label {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 0.4rem;
+/* Skills */
+.skills-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.skills-list li {
+  margin-bottom: 0.75rem;
   font-size: 1rem;
 }
 
-.skill-progress .bar-bg {
-  background-color: #ddd;
-  border-radius: 0.5rem;
-  height: 0.8rem;
-  overflow: hidden;
+/* Education */
+#education p {
+  margin-top: 0.5rem;
+  color: #444;
+  font-size: 1rem;
+  line-height: 1.4;
 }
 
-.skill-progress .bar-fill {
-  background-color: #111;
-  height: 0.8rem;
-  width: 0;
-  border-radius: 0.5rem;
-  transition: width 1.5s ease;
+/* Contact */
+#contact p {
+  font-size: 1rem;
+  color: #444;
+}
+#contact a {
+  font-weight: 600;
 }
 
-/* Animations */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem 0;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+/* Fade in animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s forwards;
+}
+.fade-in:nth-of-type(1) {
+  animation-delay: 0.2s;
+}
+.fade-in:nth-of-type(2) {
+  animation-delay: 0.4s;
+}
+.fade-in:nth-of-type(3) {
+  animation-delay: 0.6s;
+}
+.fade-in:nth-of-type(4) {
+  animation-delay: 0.8s;
+}
+.fade-in:nth-of-type(5) {
+  animation-delay: 1s;
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
+/* Responsive */
+@media (max-width: 600px) {
+  .nav-list {
+    flex-direction: column;
+    align-items: center;
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
+  .nav-list li {
+    margin: 0.5rem 0;
   }
-}
-
-.animate-fadeInDown {
-  animation: fadeInDown 1s ease forwards;
-}
-
-.animate-fadeInUp {
-  animation: fadeInUp 1s ease forwards;
-}
-
-.animate-fadeInLeft {
-  animation: fadeInLeft 1s ease forwards;
-}
-
-/* Responsive tweaks */
-@media (max-width: 768px) {
-  #hero h1 {
-    font-size: 3rem;
+  .container {
+    margin: 7rem 1rem 2rem;
   }
-
-  #hero p {
-    font-size: 1.1rem;
+  .hero h1 {
+    font-size: 2.4rem;
   }
-
-  header nav {
-    gap: 1rem;
+  h2 {
+    font-size: 1.6rem;
   }
 }
