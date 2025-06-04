@@ -1,282 +1,201 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardContent } from "./components/ui/card";
-import { Button } from "./components/ui/button";
-import { Mail, Linkedin, Github } from "lucide-react";
 
 const sections = [
   { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
   { id: "skills", label: "Skills" },
-  { id: "education", label: "Education & Certifications" },
+  { id: "education", label: "Education" },
   { id: "contact", label: "Contact" },
 ];
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("about");
 
+  // Smooth scroll to section
+  function handleNavClick(id) {
+    document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+  }
+
+  // Track scroll to highlight active nav
   useEffect(() => {
     function onScroll() {
       const scrollPos = window.scrollY + window.innerHeight / 3;
-      for (const sec of sections) {
-        const elem = document.getElementById(sec.id);
-        if (elem && elem.offsetTop <= scrollPos) {
-          setActiveSection(sec.id);
-        }
+      let current = "about";
+      for (const section of sections) {
+        const el = document.getElementById(section.id);
+        if (el && el.offsetTop <= scrollPos) current = section.id;
       }
+      setActiveSection(current);
     }
     window.addEventListener("scroll", onScroll);
+    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollToSection = (id) => {
-    const elem = document.getElementById(id);
-    if (elem) {
-      elem.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
   return (
     <>
-      <header className="sticky top-0 bg-white shadow-md z-50">
-        <nav className="max-w-4xl mx-auto flex justify-center space-x-6 py-4">
-          {sections.map((sec) => (
-            <button
-              key={sec.id}
-              onClick={() => scrollToSection(sec.id)}
-              className={`font-semibold hover:text-black transition ${
-                activeSection === sec.id
-                  ? "text-black border-b-2 border-black"
-                  : "text-gray-500"
-              }`}
-              aria-current={activeSection === sec.id ? "page" : undefined}
-            >
-              {sec.label}
-            </button>
-          ))}
+      <header className="header">
+        <nav>
+          <ul className="nav-list">
+            {sections.map(({ id, label }) => (
+              <li key={id}>
+                <button
+                  className={activeSection === id ? "active" : ""}
+                  onClick={() => handleNavClick(id)}
+                  aria-current={activeSection === id ? "page" : undefined}
+                >
+                  {label}
+                </button>
+              </li>
+            ))}
+          </ul>
         </nav>
       </header>
 
-      <main className="p-6 md:p-12 max-w-4xl mx-auto space-y-16 scroll-smooth">
-        {/* Hero Section */}
-        <section className="text-center space-y-3" id="hero">
-          <h1 className="text-5xl font-bold animate-fadeInDown">Akhil Pamarthy</h1>
-          <p className="text-xl text-gray-700 animate-fadeInUp">
-            Software Engineer | Cloud | AI enthusiast
+      <main className="container">
+        <section className="hero">
+          <h1>Akhil Pamarthy</h1>
+          <p className="title">AI & Machine Learning Engineer</p>
+          <p className="contact-line">
+            San Jose, California | +1 (469) 226-1267 |{" "}
+            <a href="mailto:akhil.pamarthy@outlook.com" target="_blank" rel="noreferrer">
+              akhil.pamarthy@outlook.com
+            </a>{" "}
+            |{" "}
+            <a
+              href="https://www.linkedin.com/in/akhil-pamarthy-16b8642a8/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn
+            </a>
           </p>
-          <p className="text-sm text-gray-500">San Jose, CA</p>
-          <div className="flex justify-center space-x-6 pt-3">
-            <a
-              href="mailto:akhil.pamarthy@outlook.com"
-              aria-label="Email"
-              className="hover:scale-110 transform transition"
-            >
-              <Mail className="w-6 h-6 text-gray-700 hover:text-black" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/akhil-pamarthy-16b8642a8/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-              className="hover:scale-110 transform transition"
-            >
-              <Linkedin className="w-6 h-6 text-gray-700 hover:text-black" />
-            </a>
-            <a
-              href="https://github.com/Akhil27P"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub"
-              className="hover:scale-110 transform transition"
-            >
-              <Github className="w-6 h-6 text-gray-700 hover:text-black" />
-            </a>
-          </div>
         </section>
 
-        {/* About Section */}
-        <section id="about" tabIndex={-1}>
-          <h2 className="text-3xl font-bold mb-4 border-b-4 border-black w-max animate-fadeInLeft">
-            About Me
-          </h2>
-          <Card>
-            <CardContent>
-              <p className="text-lg leading-relaxed">
-                I build advanced AI systems and lead product-focused engineering
-                efforts that drive real impact. I enjoy solving complex problems by
-                combining AI, cloud, and scalable automation pipelines.
-              </p>
-            </CardContent>
-          </Card>
+        <section id="about" className="section fade-in">
+          <h2>About Me</h2>
+          <p>
+            I specialize in building advanced AI systems and services, with a proven track record of leading
+            successful initiatives. Having managed large engineering and product teams, I engineer solutions
+            that have a meaningful impact for thousands of users.
+          </p>
         </section>
 
-        {/* Experience Section */}
-        <section id="experience" tabIndex={-1}>
-          <h2 className="text-3xl font-bold mb-6 border-b-4 border-black w-max animate-fadeInLeft">
-            Experience
-          </h2>
-          <Card>
-            <CardContent className="space-y-8">
-              {/* Repeat experience blocks */}
-              <ExperienceBlock
-                title="Machine Learning Engineer Intern – Eitacies Inc"
-                dateLocation="Sep 2023 – Dec 2023 · Remote"
-                description="Supported AI research in brain imaging diagnostics by developing
-                end-to-end pipelines and ML models to identify cocaine dependence
-                from SPECT scans."
-                points={[
-                  "Processed and aligned multi-modal medical imaging data using MONAI, nibabel, and nilearn.",
-                  "Improved mental health diagnosis accuracy by analyzing 5M+ anonymized clinical records.",
-                  "Built scalable NLP workflows and topic modeling tools using spaCy, NLTK, LDA, and TF-IDF.",
-                  "Reduced data processing time by 40% through optimized ETL with PySpark and cloud resources.",
-                ]}
-              />
-              <ExperienceBlock
-                title="AI/ML Engineer – Gray Logic Technologies Pvt Ltd"
-                dateLocation="Apr 2020 – Apr 2022 · Hyderabad, India"
-                description="Led development of an AI-powered vehicle damage assessment system
-                that automated insurance claims processing, reducing turnaround
-                from days to minutes."
-                points={[
-                  "Developed object detection and segmentation models with Detectron2 achieving >90% F1-score.",
-                  "Managed a large annotated dataset with VGG Image Annotator, integrating storage and retrieval via Azure Blob and Redis.",
-                  "Deployed scalable RESTful APIs on Azure App Service serving thousands of users.",
-                  "Mentored junior engineers, improving team efficiency by 20%.",
-                ]}
-              />
-              <ExperienceBlock
-                title="Procurement Analyst – Aliens Developers Pvt Ltd"
-                dateLocation="May 2019 – Mar 2020 · Hyderabad, India"
-                description="Optimized procurement workflows, reducing overstock by 15% through
-                real-time vendor analytics and automated reporting."
-                points={[
-                  "Managed data with PL/SQL and Oracle DB.",
-                  "Developed live dashboards using Power BI to track KPIs.",
-                ]}
-              />
-            </CardContent>
-          </Card>
+        <section id="experience" className="section fade-in">
+          <h2>Experience</h2>
+
+          <article className="job">
+            <h3>Machine Learning Engineer Intern</h3>
+            <p className="job-company">
+              Eitacies Inc — Sep 2023 – Dec 2023
+            </p>
+            <ul>
+              <li>Supported AI research for brain imaging-based diagnostics, extending classification models to identify cocaine dependence from SPECT scans.</li>
+              <li>Analyzed over 5 million anonymized clinical records, improving mental health diagnostic accuracy through advanced ML techniques.</li>
+              <li>Designed and deployed end-to-end AI pipelines processing raw DICOM/NIfTI medical imaging data to interpretable outputs.</li>
+              <li>Extracted diagnostic themes using LDA, TF-IDF, and coherence scoring for patient clustering and predictive modeling.</li>
+              <li>Built scalable NLP preprocessing workflows using spaCy, NLTK, regex, and visualized topic distributions.</li>
+              <li>Streamlined unstructured data ETL pipelines with PySpark and Google Drive, reducing data processing time by 40%.</li>
+              <li>Leveraged Google Colab and cloud resources for secure and efficient model training.</li>
+              <li>Worked with MONAI, nibabel, and nilearn for multi-modal text-imaging data alignment.</li>
+            </ul>
+          </article>
+
+          <article className="job">
+            <h3>AI/ML Engineer</h3>
+            <p className="job-company">Gray Logic Technologies Pvt Ltd — Apr 2020 – Apr 2022</p>
+            <ul>
+              <li>Led development of AI-powered insurance claims processing system, reducing turnaround time from days to minutes.</li>
+              <li>Reduced operational costs by 25% by automating claims triage and damage estimation using AI.</li>
+              <li>Built and maintained a 10,000+ annotated vehicle damage image dataset with VGG Image Annotator.</li>
+              <li>Developed Detectron2-based object detection and segmentation models achieving >90% F1-score.</li>
+              <li>Deployed models as RESTful APIs on Azure App Service for thousands of concurrent users.</li>
+              <li>Mentored 3 junior engineers, improving team efficiency by 20%.</li>
+            </ul>
+          </article>
+
+          <article className="job">
+            <h3>Procurement Analyst</h3>
+            <p className="job-company">Aliens Developers Pvt Ltd — May 2019 – Mar 2020</p>
+            <ul>
+              <li>Optimized procurement and inventory workflows, reducing overstock by 15% via vendor analytics.</li>
+              <li>Collaborated with engineering teams to align supply chain decisions with project timelines.</li>
+              <li>Managed procurement data using PL/SQL and Oracle DB; developed live dashboards in Power BI.</li>
+            </ul>
+          </article>
         </section>
 
-        {/* Skills Section */}
-        <section id="skills" tabIndex={-1}>
-          <h2 className="text-3xl font-bold mb-6 border-b-4 border-black w-max animate-fadeInLeft">
-            Skills
-          </h2>
-          <Card>
-            <CardContent>
-              <SkillProgress label="Python, Java, C#, SQL, PL/SQL" percent={90} />
-              <SkillProgress label="PyTorch, TensorFlow, Keras, Detectron2" percent={85} />
-              <SkillProgress label="Azure (Blob Storage, App Service, Functions)" percent={80} />
-              <SkillProgress label="PostgreSQL, MySQL, Oracle DB, Redis, MongoDB" percent={75} />
-              <SkillProgress label="Matplotlib, Power BI, Jupyter Notebook" percent={70} />
-              <SkillProgress label="Linux, Windows" percent={95} />
-            </CardContent>
-          </Card>
+        <section id="skills" className="section fade-in">
+          <h2>Core Skills</h2>
+          <ul className="skills-list">
+            <li>
+              <strong>Programming Languages:</strong> Python, Java, C#, PL/SQL, SQL
+            </li>
+            <li>
+              <strong>Machine Learning & AI:</strong> Machine Learning, Deep Learning, Generative AI,
+              Computer Vision, NLP, AI Automation, Transformers, Topic Modeling (LDA, TF-IDF),
+              Coherence Scoring, Feature Engineering, Model Fine-Tuning, Hyperparameter Tuning
+            </li>
+            <li>
+              <strong>Frameworks & Libraries:</strong> PyTorch, TensorFlow, Keras, Detectron2, MONAI, spaCy,
+              NLTK, Word2Vec, Scikit-learn, OpenCV, nibabel, nilearn
+            </li>
+            <li>
+              <strong>Cloud & DevOps:</strong> Microsoft Azure, AWS CLI, Docker, Google Colab
+            </li>
+            <li>
+              <strong>Databases:</strong> PostgreSQL, MySQL, Oracle DB, Redis, MongoDB
+            </li>
+            <li>
+              <strong>Data Processing & Web Scraping:</strong> PySpark, Selenium, Beautiful Soup, Pandas,
+              NumPy, Regex
+            </li>
+            <li>
+              <strong>Data Visualization:</strong> Matplotlib, Power BI
+            </li>
+            <li>
+              <strong>Tools & IDEs:</strong> Jupyter Notebook, VS Code, PyCharm, Terminal
+            </li>
+            <li>
+              <strong>Operating Systems:</strong> Linux, Windows
+            </li>
+          </ul>
         </section>
 
-        {/* Education & Certifications Section */}
-        <section id="education" tabIndex={-1}>
-          <h2 className="text-3xl font-bold mb-6 border-b-4 border-black w-max animate-fadeInLeft">
-            Education & Certifications
-          </h2>
-          <Card>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="font-semibold text-xl mb-1">Education</h3>
-                <p>
-                  <strong>M.Sc. in Computer and Information Sciences</strong>
-                  <br />
-                  East Texas A&M University, Dec 2023
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-xl mb-1">Certifications</h3>
-                <ul className="list-disc list-inside space-y-1">
-                  <li>Docker Foundations Professional Certificate – 2025</li>
-                  <li>RESTful API Developer – LinkedIn Learning, 2025</li>
-                  <li>Software Engineering Job Simulations – Hewlett Packard & Wells Fargo, 2025</li>
-                  <li>3× IT Wizard Competition Winner (2009-2011)</li>
-                  <li>2nd Place – Formula Kart Design Challenge</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
+        <section id="education" className="section fade-in">
+          <h2>Education & Certifications</h2>
+          <p>
+            <strong>Master of Science (M.Sc.) in Computer and Information Sciences</strong><br />
+            East Texas A&M University — Dec 2023
+          </p>
+          <p>Relevant Coursework: Programming, Algorithms, Operating Systems, Networking, Databases, Data Analysis, Big Data, Machine Learning, AI</p>
+          <p>
+            <strong>Certifications:</strong><br />
+            Docker Foundations Professional Certificate – Docker, Inc (May 2025)<br />
+            RESTful API Developer – LinkedIn Learning (May 2025)<br />
+            Software Engineering Job Simulation – Hewlett Packard Enterprise, Forage (May 2025)<br />
+            Software Engineering Job Simulation – Wells Fargo, Forage (Jun 2025)
+          </p>
+          <p>
+            <strong>Achievements:</strong><br />
+            3× IT Wizard Competition Winner (2009–2011)<br />
+            2nd Place – Formula Kart Design Challenge
+          </p>
         </section>
 
-        {/* Contact Section */}
-        <section id="contact" tabIndex={-1} className="text-center space-y-4">
-          <h2 className="text-3xl font-bold border-b-4 border-black w-max mx-auto mb-6 animate-fadeInLeft">
-            Contact Me
-          </h2>
-          <p className="text-lg">Feel free to reach out or download my resume below!</p>
-          <Button variant="outline" className="mx-auto">
-            <a href="/resume.pdf" download>
-              Download Resume (PDF)
-            </a>
-          </Button>
-          <div className="flex justify-center space-x-6 pt-3">
-            <a
-              href="mailto:akhil.pamarthy@outlook.com"
-              aria-label="Email"
-              className="hover:scale-110 transform transition"
-            >
-              <Mail className="w-6 h-6 text-gray-700 hover:text-black" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/akhil-pamarthy-16b8642a8/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-              className="hover:scale-110 transform transition"
-            >
-              <Linkedin className="w-6 h-6 text-gray-700 hover:text-black" />
-            </a>
-            <a
-              href="https://github.com/Akhil27P"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub"
-              className="hover:scale-110 transform transition"
-            >
-              <Github className="w-6 h-6 text-gray-700 hover:text-black" />
-            </a>
-          </div>
+        <section id="contact" className="section fade-in">
+          <h2>Contact</h2>
+          <p>
+            Feel free to reach out by email or phone.<br />
+            <a href="mailto:akhil.pamarthy@outlook.com">akhil.pamarthy@outlook.com</a><br />
+            +1 (469) 226-1267
+          </p>
         </section>
+
+        <footer className="footer">
+          <p>© 2025 Akhil Pamarthy</p>
+        </footer>
       </main>
     </>
-  );
-}
-
-// Helper Components for Experience and Skills
-
-function ExperienceBlock({ title, dateLocation, description, points }) {
-  return (
-    <div>
-      <h3 className="font-semibold text-xl">{title}</h3>
-      <p className="italic text-sm text-gray-600 mb-2">{dateLocation}</p>
-      <p className="mb-2">{description}</p>
-      <ul className="list-disc list-inside space-y-1">
-        {points.map((point, idx) => (
-          <li key={idx}>{point}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function SkillProgress({ label, percent }) {
-  return (
-    <div className="mb-4">
-      <div className="flex justify-between font-semibold mb-1">
-        <span>{label}</span>
-        <span>{percent}%</span>
-      </div>
-      <div className="w-full bg-gray-200 rounded-full h-4">
-        <div
-          className="bg-black h-4 rounded-full transition-all"
-          style={{ width: `${percent}%` }}
-        ></div>
-      </div>
-    </div>
   );
 }
