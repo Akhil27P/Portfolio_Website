@@ -2,13 +2,13 @@
   "name": "my-portfolio",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://akhil27p.github.io/Portfolio_Website1",
+  "homepage": "https://akhil.p/portfolio",
   "dependencies": {
-  "react": "^18.2.0",
-  "react-dom": "^18.2.0",
-  "react-scripts": "^5.0.1",
-  "lucide-react": "^0.277.0"
-},
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
+    "lucide-react": "^0.277.0"
+  },
   "devDependencies": {
     "gh-pages": "^5.0.0"
   },
@@ -21,6 +21,3 @@
     "eject": "react-scripts eject"
   }
 }
-
-
-
