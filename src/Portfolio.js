@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ResumeDownload from "./ResumeDownload";  // Import ResumeDownload button
 
 const sections = [
   { id: "about", label: "About" },
@@ -70,6 +71,11 @@ export default function Portfolio() {
               LinkedIn
             </a>
           </p>
+
+          {/* Resume Download Button */}
+          <div style={{ marginTop: "20px" }}>
+            <ResumeDownload />
+          </div>
         </section>
 
         <section id="about" className="section fade-in">
