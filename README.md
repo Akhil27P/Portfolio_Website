@@ -1,26 +1,14 @@
 # Akhil Pamarthy Portfolio
 
-This is a React portfolio website.
+This is a React portfolio website showcasing my knowledge and professional experience.
 
-## To run locally
 
-```bash
-npm install
-npm start
-```
+---
 
-## To deploy on GitHub Pages
+## Getting Started (Run Locally)
 
-Update `"homepage"` in package.json to your GitHub pages URL:
-
-```json
-"homepage": "https://akhil27p.github.io/Portfolio_Website1"
-```
-
-Then run:
+1. Clone the repository:
 
 ```bash
-npm run deploy
-```
-
-Replace `your-github-username` and `your-repo-name` accordingly.
+git clone https://github.com/akhil27p/portfolio.git
+cd portfolio
