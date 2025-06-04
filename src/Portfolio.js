@@ -1,251 +1,150 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
-import { Mail, Linkedin, Github } from "lucide-react";
+import { Envelope, Linkedin, Github } from "lucide-react";
 
-const sections = [
-  { id: "about", label: "About" },
-  { id: "experience", label: "Experience" },
-  { id: "skills", label: "Skills" },
-  { id: "education", label: "Education & Certifications" },
-  { id: "contact", label: "Contact" },
+const skills = [
+  { name: "React", level: 90 },
+  { name: "Node.js", level: 80 },
+  { name: "TypeScript", level: 80 },
+  { name: "JavaScript", level: 95 },
+  { name: "CSS", level: 90 },
 ];
 
-export default function Portfolio() {
+export function Portfolio() {
   const [activeSection, setActiveSection] = useState("about");
 
+  // Animate skill bars after component mounts
   useEffect(() => {
-    function onScroll() {
-      const scrollPos = window.scrollY + window.innerHeight / 3;
-      for (const sec of sections) {
-        const elem = document.getElementById(sec.id);
-        if (elem && elem.offsetTop <= scrollPos) {
-          setActiveSection(sec.id);
-        }
-      }
-    }
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const bars = document.querySelectorAll(".bar-fill");
+    bars.forEach((bar, i) => {
+      setTimeout(() => {
+        bar.style.width = `${skills[i].level}%`;
+      }, 300 + i * 300);
+    });
   }, []);
-
-  const scrollToSection = (id) => {
-    const elem = document.getElementById(id);
-    if (elem) {
-      elem.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
 
   return (
     <>
-      <header className="sticky top-0 bg-white shadow-md z-50">
-        <nav className="max-w-4xl mx-auto flex justify-center space-x-6 py-4">
-          {sections.map((sec) => (
-            <button
-              key={sec.id}
-              onClick={() => scrollToSection(sec.id)}
-              className={`font-semibold hover:text-black transition ${
-                activeSection === sec.id
-                  ? "text-black border-b-2 border-black"
-                  : "text-gray-500"
-              }`}
-              aria-current={activeSection === sec.id ? "page" : undefined}
-            >
-              {sec.label}
-            </button>
-          ))}
+      <header>
+        <nav role="navigation" aria-label="Primary navigation">
+          <button
+            aria-current={activeSection === "about" ? "page" : undefined}
+            onClick={() => setActiveSection("about")}
+            type="button"
+          >
+            About
+          </button>
+          <button
+            aria-current={activeSection === "skills" ? "page" : undefined}
+            onClick={() => setActiveSection("skills")}
+            type="button"
+          >
+            Skills
+          </button>
+          <button
+            aria-current={activeSection === "projects" ? "page" : undefined}
+            onClick={() => setActiveSection("projects")}
+            type="button"
+          >
+            Projects
+          </button>
+          <button
+            aria-current={activeSection === "contact" ? "page" : undefined}
+            onClick={() => setActiveSection("contact")}
+            type="button"
+          >
+            Contact
+          </button>
         </nav>
       </header>
 
-      <main className="p-6 md:p-12 max-w-4xl mx-auto space-y-16 scroll-smooth">
+      <main className="max-w-4xl mx-auto p-6 space-y-10" role="main">
         {/* Hero Section */}
-        <section className="text-center space-y-3" id="hero">
-          <h1 className="text-5xl font-bold animate-fadeInDown">Akhil Pamarthy</h1>
-          <p className="text-xl text-gray-700 animate-fadeInUp">
-            AI/ML Engineer | Building scalable AI systems & automation pipelines
+        <section id="hero" className="text-center">
+          <h1 className="animate-fadeInDown">Hello, I'm Your Name</h1>
+          <p className="animate-fadeInUp">
+            I'm a passionate web developer building modern, performant web apps.
           </p>
-          <p className="text-sm text-gray-500">San Jose, CA</p>
-          <div className="flex justify-center space-x-6 pt-3">
-            <a href="mailto:akhil.pamarthy@outlook.com" aria-label="Email" className="hover:scale-110 transform transition">
-              <Mail className="w-6 h-6 text-gray-700 hover:text-black" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/akhil-pamarthy-16b8642a8/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-              className="hover:scale-110 transform transition"
-            >
-              <Linkedin className="w-6 h-6 text-gray-700 hover:text-black" />
-            </a>
-            <a
-              href="https://github.com/Akhil27P"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub"
-              className="hover:scale-110 transform transition"
-            >
-              <Github className="w-6 h-6 text-gray-700 hover:text-black" />
-            </a>
-          </div>
+          <p>
+            Explore my portfolio below to see my skills and projects.
+          </p>
         </section>
 
         {/* About Section */}
-        <section id="about" tabIndex={-1}>
-          <h2 className="text-3xl font-bold mb-4 border-b-4 border-black w-max animate-fadeInLeft">
-            About Me
-          </h2>
-          <Card>
-            <CardContent>
-              <p className="text-lg leading-relaxed">
-                I build advanced AI systems and lead product-focused engineering
-                efforts that drive real impact. I enjoy solving complex problems by
-                combining AI, cloud, and scalable automation pipelines.
-              </p>
-            </CardContent>
-          </Card>
-        </section>
-
-        {/* Experience Section */}
-        <section id="experience" tabIndex={-1}>
-          <h2 className="text-3xl font-bold mb-6 border-b-4 border-black w-max animate-fadeInLeft">
-            Experience
-          </h2>
-          <Card>
-            <CardContent className="space-y-8">
-              {/* Repeat experience blocks */}
-              <ExperienceBlock
-                title="Machine Learning Engineer Intern – Eitacies Inc"
-                dateLocation="Sep 2023 – Dec 2023 · Remote"
-                description="Supported AI research in brain imaging diagnostics by developing
-                end-to-end pipelines and ML models to identify cocaine dependence
-                from SPECT scans."
-                points={[
-                  "Processed and aligned multi-modal medical imaging data using MONAI, nibabel, and nilearn.",
-                  "Improved mental health diagnosis accuracy by analyzing 5M+ anonymized clinical records.",
-                  "Built scalable NLP workflows and topic modeling tools using spaCy, NLTK, LDA, and TF-IDF.",
-                  "Reduced data processing time by 40% through optimized ETL with PySpark and cloud resources.",
-                ]}
-              />
-              <ExperienceBlock
-                title="AI/ML Engineer – Gray Logic Technologies Pvt Ltd"
-                dateLocation="Apr 2020 – Apr 2022 · Hyderabad, India"
-                description="Led development of an AI-powered vehicle damage assessment system
-                that automated insurance claims processing, reducing turnaround
-                from days to minutes."
-                points={[
-                  "Developed object detection and segmentation models with Detectron2 achieving >90% F1-score.",
-                  "Managed a large annotated dataset with VGG Image Annotator, integrating storage and retrieval via Azure Blob and Redis.",
-                  "Deployed scalable RESTful APIs on Azure App Service serving thousands of users.",
-                  "Mentored junior engineers, improving team efficiency by 20%.",
-                ]}
-              />
-              <ExperienceBlock
-                title="Procurement Analyst – Aliens Developers Pvt Ltd"
-                dateLocation="May 2019 – Mar 2020 · Hyderabad, India"
-                description="Optimized procurement workflows, reducing overstock by 15% through
-                real-time vendor analytics and automated reporting."
-                points={[
-                  "Managed data with PL/SQL and Oracle DB.",
-                  "Developed live dashboards using Power BI to track KPIs.",
-                ]}
-              />
-            </CardContent>
-          </Card>
-        </section>
+        {activeSection === "about" && (
+          <section
+            id="about"
+            className="card p-6 animate-fadeInLeft"
+            aria-label="About me"
+          >
+            <h2>About Me</h2>
+            <p>
+              I’m a full-stack developer with a knack for building clean and
+              efficient web applications using React, Node.js, and TypeScript.
+            </p>
+            <p>
+              I love collaborating on open-source projects and continuously learning new technologies.
+            </p>
+          </section>
+        )}
 
         {/* Skills Section */}
-        <section id="skills" tabIndex={-1}>
-          <h2 className="text-3xl font-bold mb-6 border-b-4 border-black w-max animate-fadeInLeft">
-            Skills
-          </h2>
-          <Card>
-            <CardContent>
-              <SkillProgress label="Python, Java, C#, SQL, PL/SQL" percent={90} />
-              <SkillProgress label="PyTorch, TensorFlow, Keras, Detectron2" percent={85} />
-              <SkillProgress label="Azure (Blob Storage, App Service, Functions)" percent={80} />
-              <SkillProgress label="PostgreSQL, MySQL, Oracle DB, Redis, MongoDB" percent={75} />
-              <SkillProgress label="Matplotlib, Power BI, Jupyter Notebook" percent={70} />
-              <SkillProgress label="Linux, Windows" percent={95} />
-            </CardContent>
-          </Card>
-        </section>
+        {activeSection === "skills" && (
+          <section
+            id="skills"
+            className="card p-6 animate-fadeInLeft"
+            aria-label="My skills"
+          >
+            <h2>Skills</h2>
+            {skills.map(({ name, level }) => (
+              <div className="skill-progress" key={name}>
+                <div className="label" aria-label={`${name} skill level: ${level}%`}>
+                  <span>{name}</span>
+                  <span>{level}%</span>
+                </div>
+                <div className="bar-bg" role="progressbar" aria-valuenow={level} aria-valuemin="0" aria-valuemax="100">
+                  <div className="bar-fill"></div>
+                </div>
+              </div>
+            ))}
+          </section>
+        )}
 
-        {/* Education & Certifications Section */}
-        <section id="education" tabIndex={-1}>
-          <h2 className="text-3xl font-bold mb-6 border-b-4 border-black w-max animate-fadeInLeft">
-            Education & Certifications
-          </h2>
-          <Card>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="font-semibold text-xl mb-1">Education</h3>
-                <p>
-                  <strong>M.Sc. in Computer and Information Sciences</strong>
-                  <br />
-                  East Texas A&M University, Dec 2023
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-xl mb-1">Certifications</h3>
-                <ul className="list-disc list-inside space-y-1">
-                  <li>Docker Foundations Professional Certificate – 2025</li>
-                  <li>RESTful API Developer – LinkedIn Learning, 2025</li>
-                  <li>Software Engineering Job Simulations – Hewlett Packard & Wells Fargo, 2025</li>
-                  <li>3× IT Wizard Competition Winner (2009-2011)</li>
-                  <li>2nd Place – Formula Kart Design Challenge</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
+        {/* Projects Section */}
+        {activeSection === "projects" && (
+          <section
+            id="projects"
+            className="card p-6 animate-fadeInLeft"
+            aria-label="Projects portfolio"
+          >
+            <h2>Projects</h2>
+            <p>Coming soon! Stay tuned for exciting projects.</p>
+          </section>
+        )}
 
         {/* Contact Section */}
-        <section id="contact" tabIndex={-1} className="text-center space-y-4">
-          <h2 className="text-3xl font-bold border-b-4 border-black w-max mx-auto mb-6 animate-fadeInLeft">
-            Contact Me
-          </h2>
-          <p className="text-lg">Feel free to reach out or download my resume below!</p>
-          <Button variant="outline" className="mx-auto">
-            <a href="/resume.pdf" download>
-              Download Resume (PDF)
-            </a>
-          </Button>
-        </section>
+        {activeSection === "contact" && (
+          <section id="contact" className="animate-fadeInLeft" aria-label="Contact information">
+            <p>
+              <Envelope size={20} aria-hidden="true" /> Email:{" "}
+              <a href="mailto:your.email@example.com">your.email@example.com</a>
+            </p>
+            <p>
+              <Linkedin size={20} aria-hidden="true" />{" "}
+              <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">
+                LinkedIn
+              </a>
+            </p>
+            <p>
+              <Github size={20} aria-hidden="true" />{" "}
+              <a href="https://github.com/yourgithub" target="_blank" rel="noopener noreferrer">
+                GitHub
+              </a>
+            </p>
+          </section>
+        )}
       </main>
     </>
-  );
-}
-
-// Experience block component for reuse
-function ExperienceBlock({ title, dateLocation, description, points }) {
-  return (
-    <div>
-      <h3 className="font-semibold text-xl">{title}</h3>
-      <p className="italic text-gray-600 mb-2">{dateLocation}</p>
-      <p className="mb-2">{description}</p>
-      <ul className="list-disc list-inside space-y-1">
-        {points.map((p, i) => (
-          <li key={i}>{p}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-// Skill progress bar component
-function SkillProgress({ label, percent }) {
-  return (
-    <div className="mb-4">
-      <div className="flex justify-between mb-1 font-medium text-gray-700">
-        <span>{label}</span>
-        <span>{percent}%</span>
-      </div>
-      <div className="w-full bg-gray-300 rounded h-4">
-        <div
-          className="bg-black h-4 rounded transition-all duration-1000"
-          style={{ width: `${percent}%` }}
-        />
-      </div>
-    </div>
   );
 }
