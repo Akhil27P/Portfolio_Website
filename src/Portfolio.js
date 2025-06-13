@@ -5,10 +5,10 @@ import { Input } from "./components/ui/input";
 import { Button } from "./components/ui/button";
 import { Copy } from "lucide-react";
 
-
-
 export default function Portfolio() {
-  const [url, setUrl] = useState("https://akhil27p.github.io/Portfolio_Website/");
+  const [url, setUrl] = useState(
+    "https://akhil27p.github.io/Portfolio_Website/"
+  );
   const [slug, setSlug] = useState("xyz123");
   const [custom, setCustom] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -22,12 +22,44 @@ export default function Portfolio() {
 
   const handleShorten = () => {
     if (!url.trim()) return; // ignore empty URL
+
     const generatedSlug = Math.random().toString(36).substring(2, 7);
-    setSlug(custom ? slug.trim() || generatedSlug : generatedSlug);
+    const finalSlug = custom ? slug.trim() || generatedSlug : generatedSlug;
+
+    // Load existing mappings
+    const mappings = JSON.parse(localStorage.getItem("urlMappings") || "{}");
+
+    // Check if custom slug is taken
+    if (custom && mappings[finalSlug]) {
+      alert("This custom slug is already in use. Please choose another one.");
+      return;
+    }
+
+    // If auto-generated slug conflicts, regenerate
+    if (!custom && mappings[finalSlug]) {
+      let newSlug;
+      do {
+        newSlug = Math.random().toString(36).substring(2, 7);
+      } while (mappings[newSlug]);
+      setSlug(newSlug);
+      mappings[newSlug] = url.trim();
+      localStorage.setItem("urlMappings", JSON.stringify(mappings));
+      setCopied(false);
+      return;
+    }
+
+    // Save mapping
+    mappings[finalSlug] = url.trim();
+    localStorage.setItem("urlMappings", JSON.stringify(mappings));
+    setSlug(finalSlug);
+    setCopied(false);
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`${window.location.origin}/${slug}`);
+    const shortUrl = `${window.location.origin}${
+      process.env.PUBLIC_URL || ""
+    }/${slug}`;
+    navigator.clipboard.writeText(shortUrl);
     setCopied(true);
   };
 
@@ -86,7 +118,9 @@ export default function Portfolio() {
           transition={{ type: "spring", stiffness: 300 }}
           className="flex items-center gap-3 p-4 bg-gray-800 rounded-xl justify-between select-text"
         >
-          <span className="truncate">{`${window.location.origin}/${slug}`}</span>
+          <span className="truncate">{`${window.location.origin}${
+            process.env.PUBLIC_URL || ""
+          }/${slug}`}</span>
           <Button
             size="icon"
             variant="ghost"
