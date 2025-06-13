@@ -27,7 +27,7 @@ export default function Portfolio() {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(${window.location.origin}/${slug});
+    navigator.clipboard.writeText(`${window.location.origin}/${slug}`);
     setCopied(true);
   };
 
@@ -86,7 +86,7 @@ export default function Portfolio() {
           transition={{ type: "spring", stiffness: 300 }}
           className="flex items-center gap-3 p-4 bg-gray-800 rounded-xl justify-between select-text"
         >
-          <span className="truncate">{${window.location.origin}/${slug}}</span>
+          <span className="truncate">{`${window.location.origin}/${slug}`}</span>
           <Button
             size="icon"
             variant="ghost"
