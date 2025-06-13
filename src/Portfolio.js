@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "./components/ui/card";
 import { Switch } from "./components/ui/switch";
 import { Input } from "./components/ui/input";
 import { Button } from "./components/ui/button";
 import { Copy } from "lucide-react";
+
+
 
 export default function Portfolio() {
   const [url, setUrl] = useState("https://akhil27p.github.io/Portfolio_Website/");
@@ -20,8 +21,9 @@ export default function Portfolio() {
   }, [copied]);
 
   const handleShorten = () => {
+    if (!url.trim()) return; // ignore empty URL
     const generatedSlug = Math.random().toString(36).substring(2, 7);
-    setSlug(custom ? slug : generatedSlug);
+    setSlug(custom ? slug.trim() || generatedSlug : generatedSlug);
   };
 
   const handleCopy = () => {
@@ -30,24 +32,32 @@ export default function Portfolio() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center gap-10 p-6 bg-gradient-to-br from-gray-900 to-black text-white">
+    <main className="min-h-screen flex flex-col items-center justify-center gap-12 p-8 bg-gradient-to-br from-gray-900 to-black text-white">
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="flex flex-col gap-4 w-full max-w-md"
+        className="flex flex-col gap-5 w-full max-w-lg"
       >
+        <h1 className="text-3xl font-semibold text-center mb-4">
+          URL Shortener
+        </h1>
+
         <Input
           type="url"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="Paste your long URL"
           className="rounded-xl text-black"
+          spellCheck={false}
+          autoComplete="off"
         />
 
         <div className="flex items-center justify-between">
           <Switch checked={custom} onCheckedChange={setCustom} />
-          <span className="text-sm text-gray-400">Custom slug</span>
+          <label className="text-sm text-gray-400 select-none cursor-pointer">
+            Custom slug
+          </label>
         </div>
 
         {custom && (
@@ -57,12 +67,15 @@ export default function Portfolio() {
             onChange={(e) => setSlug(e.target.value)}
             placeholder="Enter custom slug"
             className="rounded-xl text-black"
+            spellCheck={false}
+            autoComplete="off"
           />
         )}
 
         <Button
           onClick={handleShorten}
-          className="w-full bg-white text-black hover:bg-gray-300 transition-all rounded-xl"
+          className="w-full bg-white text-black hover:bg-gray-300 transition rounded-xl font-medium py-3"
+          aria-label="Shorten URL"
         >
           Shorten
         </Button>
@@ -71,15 +84,25 @@ export default function Portfolio() {
           initial={{ scale: 0 }}
           animate={{ scale: slug ? 1 : 0 }}
           transition={{ type: "spring", stiffness: 300 }}
-          className="flex items-center gap-2 p-4 bg-gray-800 rounded-xl justify-between"
+          className="flex items-center gap-3 p-4 bg-gray-800 rounded-xl justify-between select-text"
         >
           <span className="truncate">{`${window.location.origin}/${slug}`}</span>
-          <Button size="icon" variant="ghost" onClick={handleCopy} className="hover:text-green-400">
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={handleCopy}
+            className="hover:text-green-400"
+            aria-label="Copy shortened URL"
+          >
             <Copy className="w-5 h-5" />
           </Button>
         </motion.div>
 
-        {copied && <span className="text-green-400 text-sm text-center">Copied!</span>}
+        {copied && (
+          <span className="text-green-400 text-sm text-center font-semibold">
+            Copied!
+          </span>
+        )}
       </motion.div>
     </main>
   );
