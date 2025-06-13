@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "./components/ui/card";
+import { Switch } from "./components/ui/switch";
+import { Input } from "./components/ui/input";
+import { Button } from "./components/ui/button";
 import { Copy } from "lucide-react";
 
-export default function Home() {
+export default function Portfolio() {
   const [url, setUrl] = useState("https://akhil27p.github.io/Portfolio_Website/");
   const [slug, setSlug] = useState("xyz123");
   const [custom, setCustom] = useState(false);
@@ -31,12 +31,17 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-10 p-6 bg-gradient-to-br from-gray-900 to-black text-white">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="flex flex-col gap-4 w-full max-w-md">
-        <Input 
-          type="url" 
-          value={url} 
-          onChange={(e) => setUrl(e.target.value)} 
-          placeholder="Paste your long URL" 
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="flex flex-col gap-4 w-full max-w-md"
+      >
+        <Input
+          type="url"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder="Paste your long URL"
           className="rounded-xl text-black"
         />
 
@@ -46,16 +51,19 @@ export default function Home() {
         </div>
 
         {custom && (
-          <Input 
-            type="text" 
-            value={slug} 
-            onChange={(e) => setSlug(e.target.value)} 
+          <Input
+            type="text"
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
             placeholder="Enter custom slug"
             className="rounded-xl text-black"
           />
         )}
 
-        <Button onClick={handleShorten} className="w-full bg-white text-black hover:bg-gray-300 transition-all rounded-xl">
+        <Button
+          onClick={handleShorten}
+          className="w-full bg-white text-black hover:bg-gray-300 transition-all rounded-xl"
+        >
           Shorten
         </Button>
 
